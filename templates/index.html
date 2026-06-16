@@ -773,7 +773,7 @@
 
     <!-- HERO -->
     <div class="page-hero">
-      <div class="hero-badge blue">&#9679; &nbsp;DSCR TURNKEY PROGRAM | $4,000</div>
+      <div class="hero-badge blue">&#9679; &nbsp;DSCR TURNKEY PROGRAM</div>
       <h1>Your First Cash-Flowing Section 8 Property. In 6 Months. Guaranteed.</h1>
       <p>The conservative approach. Buy a government-certified, income-ready property in a proven market. Start collecting guaranteed Section 8 rent within 60 to 90 days of joining.</p>
     </div>
@@ -878,9 +878,14 @@
               <div class="return-sub">on $23,000 invested</div>
             </div>
           </div>
-          <div style="padding:24px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);">Program Investment</span>
-            <span style="font-size:32px;font-weight:900;letter-spacing:-1px;color:var(--blue);">$4,000</span>
+          <div style="padding:24px 28px;border-top:1px solid var(--border);text-align:center;">
+            <div id="turnkey-price-hidden">
+              <button onclick="revealPrice('turnkey')" style="background:var(--blue);color:#fff;border:none;padding:14px 36px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.3px;" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='var(--blue)'">Reveal Program Investment</button>
+            </div>
+            <div id="turnkey-price-shown" style="display:none;animation:fadeIn 0.4s ease;">
+              <div style="font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;">Program Investment</div>
+              <div style="font-size:48px;font-weight:900;letter-spacing:-2px;color:var(--blue);">$4,000</div>
+            </div>
           </div>
         </div>
       </div>
@@ -976,7 +981,7 @@
 
     <!-- HERO -->
     <div class="page-hero">
-      <div class="hero-badge purple">&#9679; &nbsp;BRRRR STRATEGY | $6,000</div>
+      <div class="hero-badge purple">&#9679; &nbsp;BRRRR STRATEGY</div>
       <h1>Buy. Rehab. Rent. Refinance. Repeat. 3 Properties Guaranteed in 12 Months.</h1>
       <p>The wealth-building approach. Buy distressed below market value, renovate to HUD standards, place a Section 8 tenant, refinance to pull most of your capital back, then do it again.</p>
     </div>
@@ -1104,9 +1109,14 @@
               <div class="return-sub">on $10,500 remaining</div>
             </div>
           </div>
-          <div style="padding:24px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);">Program Investment</span>
-            <span style="font-size:32px;font-weight:900;letter-spacing:-1px;color:var(--purple);">$6,000</span>
+          <div style="padding:24px 28px;border-top:1px solid var(--border);text-align:center;">
+            <div id="brrrr-price-hidden">
+              <button onclick="revealPrice('brrrr')" style="background:var(--purple);color:#fff;border:none;padding:14px 36px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.3px;" onmouseover="this.style.background='#7c3aed'" onmouseout="this.style.background='var(--purple)'">Reveal Program Investment</button>
+            </div>
+            <div id="brrrr-price-shown" style="display:none;animation:fadeIn 0.4s ease;">
+              <div style="font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted2);margin-bottom:8px;">Program Investment</div>
+              <div style="font-size:48px;font-weight:900;letter-spacing:-2px;color:var(--purple);">$6,000</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1218,6 +1228,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
     renderNav(key);
     triggerCountUp(target);
+    resetPrice(key);
     window.location.hash = key;
   }
 
@@ -1234,6 +1245,20 @@
       html += `<button class="nav-btn nav-btn-blue" onclick="show('turnkey')">Switch to Turnkey $4K &rarr;</button>`;
     }
     nav.innerHTML = html;
+  }
+
+  function revealPrice(strategy) {
+    document.getElementById(strategy + '-price-hidden').style.display = 'none';
+    document.getElementById(strategy + '-price-shown').style.display = 'block';
+  }
+
+  function resetPrice(key) {
+    ['turnkey', 'brrrr'].forEach(function(s) {
+      var hidden = document.getElementById(s + '-price-hidden');
+      var shown = document.getElementById(s + '-price-shown');
+      if (hidden) hidden.style.display = 'block';
+      if (shown) shown.style.display = 'none';
+    });
   }
 
   function triggerCountUp(container) {
