@@ -800,6 +800,23 @@
     .calc-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
     .calc-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--blue); cursor: pointer; }
     .calc-hint { font-size: 12px; color: var(--muted2); margin-top: 7px; }
+    .calc-dfy {
+      display: none;
+      gap: 11px;
+      align-items: flex-start;
+      margin-top: 13px;
+      padding: 14px 15px;
+      border-radius: 12px;
+      background: linear-gradient(110deg, rgba(59,130,246,0.10), rgba(139,92,246,0.12));
+      border: 1px solid var(--border2);
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: var(--muted);
+      animation: calcFade 0.25s ease;
+    }
+    .calc-dfy.show { display: flex; }
+    .calc-dfy b { color: var(--text); font-weight: 700; }
+    .calc-dfy-ico { font-size: 18px; line-height: 1.2; flex-shrink: 0; }
 
     .calc-results { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 26px 26px 22px; }
     .calc-hero { text-align: center; padding-bottom: 22px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
@@ -1426,6 +1443,21 @@
             <input type="range" class="calc-range" id="monthly" min="0" max="10000" step="250" value="1500">
             <div class="calc-hint">Money you reinvest from your job or business each month.</div>
           </div>
+          <div class="calc-field">
+            <div class="calc-field-top">
+              <label>Deals running at once</label>
+              <span class="calc-val" id="v-parallel">4</span>
+            </div>
+            <input type="range" class="calc-range" id="parallel" min="1" max="8" step="1" value="4">
+            <div class="calc-hint">How many properties you have in motion at the same time.</div>
+            <div class="calc-dfy" id="parallel-note">
+              <span class="calc-dfy-ico">&#128640;</span>
+              <div>
+                <b>Running more than 4 deals at once is a full-time job.</b>
+                Acquisition, rehab, and tenant placement on that many properties is more than one person can manage. At this pace you'll want a team handling the heavy lifting for you. Ask about our done-for-you program where we run the deals so you can keep scaling.
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- RESULTS -->
@@ -1628,6 +1660,7 @@
         goal: +cid('goal').value,
         start: +cid('start').value,
         monthly: +cid('monthly').value,
+        parallel: +cid('parallel').value,
         s: STRAT[state.strat]
       };
     }
@@ -1643,7 +1676,7 @@
           return true;
         });
         let guard = 0;
-        while (cash >= s.cashIn && inFlight.length < s.parallel && (owned + inFlight.length) < DOOR_CAP && guard < 80){
+        while (cash >= s.cashIn && inFlight.length < p.parallel && (owned + inFlight.length) < DOOR_CAP && guard < 80){
           cash -= s.cashIn; inFlight.push(m + s.cycle); guard++;
         }
         hist.push(owned);
@@ -1688,11 +1721,13 @@
 
     function update(){
       const p = readInputs();
-      setFill('goal'); setFill('start'); setFill('monthly');
+      setFill('goal'); setFill('start'); setFill('monthly'); setFill('parallel');
       const g = GOAL_CFG[state.goalType];
       cid('v-goal').textContent = state.goalType === 'doors' ? p.goal + (p.goal === 1 ? ' door' : ' doors') : fmtFull(p.goal);
       cid('v-start').textContent = fmtFull(p.start);
       cid('v-monthly').textContent = fmtFull(p.monthly);
+      cid('v-parallel').textContent = p.parallel + (p.parallel === 1 ? ' deal' : ' deals');
+      cid('parallel-note').classList.toggle('show', p.parallel > 4);
 
       const sim = simulate(p);
       const gm = goalMonth(sim, p);
@@ -1801,7 +1836,7 @@
 
     cid('calc-overlay').addEventListener('click', e => { if (e.target === cid('calc-overlay')) closeCalc(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
-    ['goal','start','monthly'].forEach(id => cid(id).addEventListener('input', update));
+    ['goal','start','monthly','parallel'].forEach(id => cid(id).addEventListener('input', update));
     update();
   })();
 </script>
