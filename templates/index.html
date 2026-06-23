@@ -967,6 +967,10 @@
       </div>
     </div>
 
+    <div style="text-align:center;margin:48px 0 8px;">
+      <button class="nav-btn nav-btn-purple" onclick="show('brrrr')" style="padding:14px 36px;font-size:15px;border-radius:12px;letter-spacing:0.3px;">Switch to BRRRR &rarr;</button>
+    </div>
+
     <div class="disclaimer">
       investingsection8.com &nbsp;&bull;&nbsp; @josephkhaterire &nbsp;&bull;&nbsp; Licensed Realtor Virginia &nbsp;&bull;&nbsp; Numbers based on actual client results. Individual results vary.
     </div>
@@ -1209,6 +1213,10 @@
       </div>
     </div>
 
+    <div style="text-align:center;margin:48px 0 8px;">
+      <button class="nav-btn nav-btn-blue" onclick="show('turnkey')" style="padding:14px 36px;font-size:15px;border-radius:12px;letter-spacing:0.3px;">Switch to Turnkey &rarr;</button>
+    </div>
+
     <div class="disclaimer">
       investingsection8.com &nbsp;&bull;&nbsp; @josephkhaterire &nbsp;&bull;&nbsp; Licensed Realtor Virginia &nbsp;&bull;&nbsp; Numbers based on actual client results. Individual results vary.
     </div>
@@ -1240,9 +1248,9 @@
     }
     let html = `<button class="nav-btn nav-btn-ghost" onclick="show('home')">&#8592; All Strategies</button>`;
     if (active === 'turnkey') {
-      html += `<button class="nav-btn nav-btn-purple" onclick="show('brrrr')">Switch to BRRRR $6K &rarr;</button>`;
+      html += `<button class="nav-btn nav-btn-purple" onclick="show('brrrr')">Switch to BRRRR &rarr;</button>`;
     } else {
-      html += `<button class="nav-btn nav-btn-blue" onclick="show('turnkey')">Switch to Turnkey $4K &rarr;</button>`;
+      html += `<button class="nav-btn nav-btn-blue" onclick="show('turnkey')">Switch to Turnkey &rarr;</button>`;
     }
     nav.innerHTML = html;
   }
