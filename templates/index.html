@@ -705,7 +705,128 @@
       .home-hero h1 { font-size: 30px; }
       nav { padding: 14px 20px; }
       .page-wrap { padding: 24px 20px 60px; }
+      .calc-grid { grid-template-columns: 1fr !important; }
+      .calc-stat-grid { grid-template-columns: 1fr 1fr !important; }
+      .calc-modal-inner { padding: 24px 18px 40px !important; }
     }
+
+    /* ─── GOAL CALCULATOR ─── */
+    .calc-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 15px 32px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: #fff;
+      background: linear-gradient(110deg, var(--blue) 0%, var(--purple) 100%);
+      box-shadow: 0 12px 34px rgba(99,102,241,0.32);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+    .calc-btn:hover { transform: translateY(-2px) scale(1.015); box-shadow: 0 18px 46px rgba(99,102,241,0.45); filter: brightness(1.06); }
+    .calc-btn .calc-btn-ico { font-size: 17px; }
+    .calc-btn-sub { display:block; font-size:12px; font-weight:600; color:var(--muted); margin-top:10px; letter-spacing:0.2px; }
+
+    .calc-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(5,9,18,0.82);
+      backdrop-filter: blur(6px);
+      display: none;
+      overflow-y: auto;
+      animation: calcFade 0.25s ease;
+    }
+    .calc-overlay.open { display: block; }
+    @keyframes calcFade { from { opacity: 0; } to { opacity: 1; } }
+    .calc-modal {
+      max-width: 980px;
+      margin: 40px auto;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 22px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+      overflow: hidden;
+      animation: calcRise 0.3s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes calcRise { from { transform: translateY(24px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+    .calc-modal-head {
+      position: relative;
+      padding: 30px 34px 24px;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(120% 160% at 0% 0%, rgba(59,130,246,0.14), transparent 55%), radial-gradient(120% 160% at 100% 0%, rgba(139,92,246,0.16), transparent 55%);
+    }
+    .calc-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+    .calc-modal-head h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.8px; line-height: 1.15; }
+    .calc-modal-head p { font-size: 14px; color: var(--muted); margin-top: 8px; max-width: 640px; }
+    .calc-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--surface2); border: 1px solid var(--border2);
+      color: var(--muted); font-size: 20px; line-height: 1; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .calc-close:hover { color: var(--text); background: #232f45; }
+    .calc-modal-inner { padding: 28px 34px 44px; }
+
+    .calc-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 26px; }
+
+    .calc-label { font-size: 12px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted2); margin-bottom: 12px; }
+    .seg { display: grid; gap: 8px; margin-bottom: 22px; }
+    .seg-row { display: grid; grid-auto-flow: column; gap: 8px; }
+    .seg-btn {
+      padding: 11px 8px; border-radius: 11px; cursor: pointer;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--muted); font-family: inherit; font-size: 13px; font-weight: 700; text-align: center;
+      transition: all 0.16s;
+    }
+    .seg-btn:hover { color: var(--text); border-color: var(--border2); }
+    .seg-btn.active { color: #fff; border-color: transparent; background: linear-gradient(110deg, var(--blue), var(--purple)); }
+    .seg-btn.active.s-tk { background: var(--blue); }
+    .seg-btn.active.s-br { background: var(--purple); }
+
+    .calc-field { margin-bottom: 22px; }
+    .calc-field-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 11px; }
+    .calc-field-top label { font-size: 14px; font-weight: 600; color: var(--text); }
+    .calc-field-top .calc-val { font-size: 17px; font-weight: 800; color: var(--blue); }
+    .calc-range {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 5px; border-radius: 5px; cursor: pointer;
+      background: linear-gradient(to right, var(--blue) 0%, var(--blue) var(--pct,40%), var(--border2) var(--pct,40%), var(--border2) 100%);
+    }
+    .calc-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--blue); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.15s; }
+    .calc-range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+    .calc-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--blue); cursor: pointer; }
+    .calc-hint { font-size: 12px; color: var(--muted2); margin-top: 7px; }
+
+    .calc-results { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 26px 26px 22px; }
+    .calc-hero { text-align: center; padding-bottom: 22px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+    .calc-hero-label { font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 6px; }
+    .calc-hero-num { font-size: 60px; font-weight: 900; letter-spacing: -3px; line-height: 1; background: linear-gradient(110deg, #60a5fa, #a78bfa); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .calc-hero-unit { font-size: 15px; font-weight: 600; color: var(--muted); margin-top: 8px; }
+    .calc-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .calc-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 15px 16px; }
+    .calc-stat-label { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted2); margin-bottom: 7px; }
+    .calc-stat-val { font-size: 23px; font-weight: 900; letter-spacing: -0.8px; }
+    .calc-stat-foot { font-size: 11px; color: var(--muted2); margin-top: 4px; }
+    .c-green { color: var(--green); } .c-blue { color: #60a5fa; } .c-purple { color: #a78bfa; } .c-gold { color: #fbbf24; }
+
+    .calc-section-title { font-size: 15px; font-weight: 800; letter-spacing: -0.2px; margin: 30px 0 6px; }
+    .calc-section-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .calc-chart-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 18px 14px 8px; }
+    .calc-chart-wrap svg { width: 100%; height: auto; display: block; }
+    .calc-grid-line { stroke: var(--border); stroke-width: 1; }
+    .calc-axis-txt { fill: var(--muted2); font-size: 11px; font-family: 'Inter', sans-serif; }
+    .calc-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 13.5px; }
+    .calc-table th { text-align: right; padding: 11px 14px; color: var(--muted2); font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    .calc-table th:first-child, .calc-table td:first-child { text-align: left; }
+    .calc-table td { text-align: right; padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
+    .calc-table tr.goal-row td { background: rgba(59,130,246,0.10); color: #93c5fd; font-weight: 800; }
+    .calc-table tr.peak-row td { background: rgba(139,92,246,0.10); color: #c4b5fd; font-weight: 800; }
+    .calc-foot-note { font-size: 11.5px; color: var(--muted2); margin-top: 18px; line-height: 1.6; }
+    .calc-cta { margin-top: 24px; text-align: center; }
   </style>
 </head>
 <body>
@@ -726,6 +847,10 @@
     <div class="eyebrow">Joseph Khateri | Strategy Overview</div>
     <h1>Select a Strategy<br>to Present</h1>
     <p>Government-backed real estate. Guaranteed results. Choose the program that fits your prospect.</p>
+    <div style="margin-top:26px;">
+      <button class="calc-btn" onclick="openCalc()"><span class="calc-btn-ico">&#128202;</span> Calculate My Goal</button>
+      <span class="calc-btn-sub">Set a target. See how fast you get there and what your portfolio is worth.</span>
+    </div>
   </div>
 
   <div class="strategy-cards">
@@ -758,6 +883,12 @@
       </ul>
       <button class="open-btn open-btn-purple">View BRRRR Strategy &rarr;</button>
     </div>
+  </div>
+
+  <div style="text-align:center;margin:8px auto 4px;max-width:640px;padding:28px 24px;background:radial-gradient(120% 160% at 0% 0%, rgba(59,130,246,0.10), transparent 60%), radial-gradient(120% 160% at 100% 100%, rgba(139,92,246,0.12), transparent 60%);border:1px solid var(--border);border-radius:18px;">
+    <div style="font-size:19px;font-weight:800;letter-spacing:-0.4px;margin-bottom:6px;">Not sure which path fits your goal?</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:20px;">Tell us where you want to end up. We'll show you the fastest way there.</div>
+    <button class="calc-btn" onclick="openCalc()"><span class="calc-btn-ico">&#128202;</span> Build My Plan</button>
   </div>
 
   <div class="home-footer">
@@ -890,6 +1021,10 @@
         </div>
       </div>
       <p class="cash-note">Numbers based on actual client deals. Individual results vary.</p>
+      <div style="text-align:center;margin:30px 0 4px;">
+        <button class="calc-btn" onclick="openCalc()"><span class="calc-btn-ico">&#128202;</span> See This Scaled to My Goal</button>
+        <span class="calc-btn-sub">Turn one deal into your full timeline, passive income, and net worth.</span>
+      </div>
     </div>
 
     <hr class="section-divider" />
@@ -967,8 +1102,11 @@
       </div>
     </div>
 
-    <div style="text-align:center;margin:48px 0 8px;">
+    <div style="text-align:center;margin:48px 0 6px;">
       <button class="nav-btn nav-btn-purple" onclick="show('brrrr')" style="padding:14px 36px;font-size:15px;border-radius:12px;letter-spacing:0.3px;">Switch to BRRRR &rarr;</button>
+    </div>
+    <div style="text-align:center;margin:14px 0 8px;">
+      <button class="calc-btn" onclick="openCalc()"><span class="calc-btn-ico">&#128202;</span> Calculate My Goal</button>
     </div>
 
     <div class="disclaimer">
@@ -1125,6 +1263,10 @@
         </div>
       </div>
       <p class="cash-note">Numbers based on actual client deals. Individual results vary.</p>
+      <div style="text-align:center;margin:30px 0 4px;">
+        <button class="calc-btn" onclick="openCalc()"><span class="calc-btn-ico">&#128202;</span> See This Scaled to My Goal</button>
+        <span class="calc-btn-sub">Turn one deal into your full timeline, passive income, and net worth.</span>
+      </div>
     </div>
 
     <!-- CASE STUDY -->
@@ -1213,12 +1355,155 @@
       </div>
     </div>
 
-    <div style="text-align:center;margin:48px 0 8px;">
+    <div style="text-align:center;margin:48px 0 6px;">
       <button class="nav-btn nav-btn-blue" onclick="show('turnkey')" style="padding:14px 36px;font-size:15px;border-radius:12px;letter-spacing:0.3px;">Switch to Turnkey &rarr;</button>
+    </div>
+    <div style="text-align:center;margin:14px 0 8px;">
+      <button class="calc-btn" onclick="openCalc()"><span class="calc-btn-ico">&#128202;</span> Calculate My Goal</button>
     </div>
 
     <div class="disclaimer">
       investingsection8.com &nbsp;&bull;&nbsp; @josephkhaterire &nbsp;&bull;&nbsp; Licensed Realtor Virginia &nbsp;&bull;&nbsp; Numbers based on actual client results. Individual results vary.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GOAL CALCULATOR MODAL
+═══════════════════════════════════════════════════════════ -->
+<div class="calc-overlay" id="calc-overlay">
+  <div class="calc-modal">
+    <div class="calc-modal-head">
+      <button class="calc-close" onclick="closeCalc()">&times;</button>
+      <div class="calc-eyebrow">Your Personal Roadmap</div>
+      <h2>Build My Section 8 Plan</h2>
+      <p>Set your goal. See exactly how fast you get there, how much passive income you build, and what your portfolio is worth when it's paid off.</p>
+    </div>
+    <div class="calc-modal-inner">
+      <div class="calc-grid">
+
+        <!-- CONTROLS -->
+        <div>
+          <div class="calc-label">1. What's your goal?</div>
+          <div class="seg">
+            <div class="seg-row">
+              <button class="seg-btn active" id="goal-income" onclick="setGoal('income')">Passive Income</button>
+              <button class="seg-btn" id="goal-doors" onclick="setGoal('doors')">Doors Owned</button>
+              <button class="seg-btn" id="goal-networth" onclick="setGoal('networth')">Net Worth</button>
+            </div>
+          </div>
+
+          <div class="calc-field">
+            <div class="calc-field-top">
+              <label id="goal-label">Monthly passive income goal</label>
+              <span class="calc-val" id="v-goal">$10,000</span>
+            </div>
+            <input type="range" class="calc-range" id="goal" min="2000" max="40000" step="500" value="10000">
+            <div class="calc-hint" id="goal-hint">After all expenses. The income that replaces your job.</div>
+          </div>
+
+          <div class="calc-label" style="margin-top:30px;">2. Which strategy?</div>
+          <div class="seg">
+            <div class="seg-row">
+              <button class="seg-btn s-tk active" id="strat-turnkey" onclick="setStrat('turnkey')">Turnkey</button>
+              <button class="seg-btn s-br" id="strat-brrrr" onclick="setStrat('brrrr')">BRRRR</button>
+            </div>
+          </div>
+
+          <div class="calc-label" style="margin-top:30px;">3. Your starting position</div>
+          <div class="calc-field">
+            <div class="calc-field-top">
+              <label>Capital to start</label>
+              <span class="calc-val" id="v-start">$30,000</span>
+            </div>
+            <input type="range" class="calc-range" id="start" min="10000" max="200000" step="5000" value="30000">
+          </div>
+          <div class="calc-field">
+            <div class="calc-field-top">
+              <label>Added every month</label>
+              <span class="calc-val" id="v-monthly">$1,500</span>
+            </div>
+            <input type="range" class="calc-range" id="monthly" min="0" max="10000" step="250" value="1500">
+            <div class="calc-hint">Money you reinvest from your job or business each month.</div>
+          </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="calc-results">
+          <div class="calc-hero">
+            <div class="calc-hero-label">Time to hit your goal</div>
+            <div class="calc-hero-num" id="r-years">7.2</div>
+            <div class="calc-hero-unit" id="r-years-unit">years from today</div>
+          </div>
+          <div class="calc-stat-grid">
+            <div class="calc-stat">
+              <div class="calc-stat-label">Doors Owned</div>
+              <div class="calc-stat-val c-blue" id="r-doors">25</div>
+              <div class="calc-stat-foot">rented, cash-flowing</div>
+            </div>
+            <div class="calc-stat">
+              <div class="calc-stat-label">Passive Income</div>
+              <div class="calc-stat-val c-green" id="r-income">$10,050</div>
+              <div class="calc-stat-foot">per month, net</div>
+            </div>
+            <div class="calc-stat">
+              <div class="calc-stat-label">Equity Built</div>
+              <div class="calc-stat-val c-purple" id="r-equity">$1.1M</div>
+              <div class="calc-stat-foot">your net worth in real estate</div>
+            </div>
+            <div class="calc-stat">
+              <div class="calc-stat-label">Portfolio Value</div>
+              <div class="calc-stat-val c-gold" id="r-value">$2.2M</div>
+              <div class="calc-stat-foot">total real estate owned</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHEN IT'S PAID OFF -->
+      <div class="calc-section-title">When it's fully paid off</div>
+      <div class="calc-section-sub">Keep holding and let the tenants pay down the loans. Here's what you're really building.</div>
+      <div class="calc-stat-grid" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="calc-stat">
+          <div class="calc-stat-label">Equity in 20 Years</div>
+          <div class="calc-stat-val c-purple" id="r-eq20">$3.4M</div>
+          <div class="calc-stat-foot">if you simply hold</div>
+        </div>
+        <div class="calc-stat">
+          <div class="calc-stat-label">Portfolio Paid Off</div>
+          <div class="calc-stat-val c-gold" id="r-paidoff">$4.0M</div>
+          <div class="calc-stat-foot">value at 30-yr, debt gone</div>
+        </div>
+        <div class="calc-stat">
+          <div class="calc-stat-label">Income, Paid Off</div>
+          <div class="calc-stat-val c-green" id="r-incpaid">$28,000</div>
+          <div class="calc-stat-foot">per month, no mortgage</div>
+        </div>
+      </div>
+
+      <!-- CHART -->
+      <div class="calc-section-title">Your doors over time</div>
+      <div class="calc-section-sub">Each door buys the next one faster. This is what compounding looks like.</div>
+      <div class="calc-chart-wrap">
+        <svg id="calc-chart" viewBox="0 0 720 300" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <!-- MILESTONES -->
+      <div class="calc-section-title">The milestones</div>
+      <div class="calc-section-sub">Where you stand at each point on the journey.</div>
+      <table class="calc-table">
+        <thead><tr><th>When</th><th>Doors</th><th>Income / mo</th><th>Equity</th><th>Portfolio</th></tr></thead>
+        <tbody id="calc-miles"></tbody>
+      </table>
+
+      <div class="calc-cta">
+        <button class="calc-btn" onclick="closeCalc()"><span class="calc-btn-ico">&#9889;</span> Let's build this plan together</button>
+        <span class="calc-btn-sub">Book a call with Joseph and turn this into your real timeline.</span>
+      </div>
+
+      <p class="calc-foot-note">
+        Assumptions, grounded in real client deals: Turnkey door ~$80k value, $23k all-in, ~$402/mo net cash flow, buy-and-hold. BRRRR door ~$90k after-repair value, $28.5k in with ~$18k returned at refinance, ~$472/mo net cash flow, ~6-month deal cycle. Both: 30-year loan at 7.75%, 3% yearly appreciation, all cash flow and savings recycled into the next deal. Equity figures are gross, before selling costs and taxes. Real results vary deal to deal. This is a planning tool, not a guarantee.
+      </p>
     </div>
   </div>
 </div>
@@ -1304,6 +1589,221 @@
     const hash = window.location.hash.replace('#', '') || 'home';
     show(VIEWS[hash] ? hash : 'home');
   });
+
+  /* ═══════════════ GOAL CALCULATOR ═══════════════ */
+  (function(){
+    const cid = id => document.getElementById(id);
+    const fmtMoney = n => {
+      const a = Math.abs(n);
+      if (a >= 1e6) return '$' + (n/1e6).toFixed(n >= 1e7 ? 1 : 2).replace(/\.?0+$/,'') + 'M';
+      if (a >= 1000) return '$' + Math.round(n/1000) + 'k';
+      return '$' + Math.round(n);
+    };
+    const fmtFull = n => '$' + Math.round(n).toLocaleString();
+
+    // Strategy assumptions — grounded in the deal analyses on this page
+    const STRAT = {
+      turnkey: { arv:80000, cashIn:23000, cashBack:0,     loan:64000, cf:402, cycle:2, parallel:3, hue:'#3B82F6' },
+      brrrr:   { arv:90000, cashIn:28500, cashBack:18000, loan:67500, cf:472, cycle:6, parallel:3, hue:'#8B5CF6' }
+    };
+    const RATE = 0.0775, APPR = 0.03, TERM = 360, MAXM = 480, DOOR_CAP = 60;
+
+    const state = { goalType:'income', strat:'turnkey' };
+    const GOAL_CFG = {
+      income:   { min:2000,   max:40000,   step:500,    def:10000,   label:'Monthly passive income goal', hint:'After all expenses. The income that replaces your job.' },
+      doors:    { min:1,      max:50,      step:1,      def:15,      label:'Number of doors you want',     hint:'Each door is one rented, cash-flowing unit.' },
+      networth: { min:250000, max:5000000, step:250000, def:1000000, label:'Net worth (equity) goal',      hint:'Your equity: what the portfolio is worth minus what you owe.' }
+    };
+
+    // remaining loan balance after m payments on a TERM-month loan
+    function balance(L, m){
+      if (m <= 0) return L;
+      if (m >= TERM) return 0;
+      const i = RATE/12;
+      return L * (Math.pow(1+i,TERM) - Math.pow(1+i,m)) / (Math.pow(1+i,TERM) - 1);
+    }
+
+    function readInputs(){
+      return {
+        goal: +cid('goal').value,
+        start: +cid('start').value,
+        monthly: +cid('monthly').value,
+        s: STRAT[state.strat]
+      };
+    }
+
+    function simulate(p){
+      const s = p.s;
+      let cash = p.start, owned = 0, inFlight = [];
+      const acq = [], hist = [0];
+      for (let m = 1; m <= MAXM; m++){
+        cash += p.monthly + owned * s.cf;
+        inFlight = inFlight.filter(done => {
+          if (done <= m){ cash += s.cashBack; owned++; acq.push(m); return false; }
+          return true;
+        });
+        let guard = 0;
+        while (cash >= s.cashIn && inFlight.length < s.parallel && (owned + inFlight.length) < DOOR_CAP && guard < 80){
+          cash -= s.cashIn; inFlight.push(m + s.cycle); guard++;
+        }
+        hist.push(owned);
+      }
+      return { acq, hist, p };
+    }
+
+    // snapshot of portfolio at a given month
+    function snap(sim, month){
+      const s = sim.p.s;
+      let value = 0, debt = 0, doors = 0;
+      for (const a of sim.acq){
+        if (a <= month){
+          const yrs = (month - a)/12;
+          value += s.arv * Math.pow(1+APPR, yrs);
+          debt  += balance(s.loan, month - a);
+          doors++;
+        }
+      }
+      return { doors, value, equity: value - debt, income: doors * s.cf };
+    }
+
+    // value with all loans paid off and `years` of appreciation on `doors`
+    function paidOff(sim, doors, years){
+      return doors * sim.p.s.arv * Math.pow(1+APPR, years);
+    }
+
+    function goalMonth(sim, p){
+      for (let m = 1; m <= MAXM; m++){
+        const sn = snap(sim, m);
+        if (state.goalType === 'doors'   && sn.doors  >= p.goal) return m;
+        if (state.goalType === 'income'  && sn.income >= p.goal) return m;
+        if (state.goalType === 'networth'&& sn.equity >= p.goal) return m;
+      }
+      return null;
+    }
+
+    function setFill(id){
+      const el = cid(id), min = +el.min, max = +el.max;
+      el.style.setProperty('--pct', ((el.value - min)/(max - min))*100 + '%');
+    }
+
+    function update(){
+      const p = readInputs();
+      setFill('goal'); setFill('start'); setFill('monthly');
+      const g = GOAL_CFG[state.goalType];
+      cid('v-goal').textContent = state.goalType === 'doors' ? p.goal + (p.goal === 1 ? ' door' : ' doors') : fmtFull(p.goal);
+      cid('v-start').textContent = fmtFull(p.start);
+      cid('v-monthly').textContent = fmtFull(p.monthly);
+
+      const sim = simulate(p);
+      const gm = goalMonth(sim, p);
+
+      if (gm){
+        const sn = snap(sim, gm);
+        cid('r-years').textContent = (gm/12).toFixed(1);
+        cid('r-years-unit').textContent = (gm/12) < 1.05 ? 'years from today' : 'years from today';
+        cid('r-doors').textContent = sn.doors;
+        cid('r-income').textContent = fmtFull(sn.income);
+        cid('r-equity').textContent = fmtMoney(sn.equity);
+        cid('r-value').textContent = fmtMoney(sn.value);
+
+        const hold20 = snap(sim, gm + 240);
+        cid('r-eq20').textContent = fmtMoney(hold20.equity);
+        cid('r-paidoff').textContent = fmtMoney(paidOff(sim, sn.doors, 30));
+        cid('r-incpaid').textContent = fmtFull(sn.doors * sim.p.s.cf);
+      } else {
+        cid('r-years').textContent = '40+';
+        cid('r-years-unit').textContent = 'raise your starting capital or monthly amount';
+        ['r-doors','r-income','r-equity','r-value','r-eq20','r-paidoff','r-incpaid'].forEach(id => cid(id).textContent = '--');
+      }
+
+      drawChart(sim, gm, p);
+      renderMiles(sim, gm, p);
+    }
+
+    function renderMiles(sim, gm, p){
+      const years = [1,3,5,10,15,20];
+      let rows = '';
+      for (const y of years){
+        const sn = snap(sim, y*12);
+        rows += `<tr><td>Year ${y}</td><td>${sn.doors}</td><td>${fmtFull(sn.income)}</td><td>${fmtMoney(sn.equity)}</td><td>${fmtMoney(sn.value)}</td></tr>`;
+      }
+      if (gm){
+        const sn = snap(sim, gm);
+        rows += `<tr class="goal-row"><td>Goal &middot; yr ${(gm/12).toFixed(1)}</td><td>${sn.doors}</td><td>${fmtFull(sn.income)}</td><td>${fmtMoney(sn.equity)}</td><td>${fmtMoney(sn.value)}</td></tr>`;
+        const sn30 = snap(sim, gm + 360 > MAXM ? MAXM : gm + 360);
+        rows += `<tr class="peak-row"><td>Paid off</td><td>${sn.doors}</td><td>${fmtFull(sn.doors * sim.p.s.cf)}</td><td>${fmtMoney(paidOff(sim, sn.doors, 30))}</td><td>${fmtMoney(paidOff(sim, sn.doors, 30))}</td></tr>`;
+      }
+      cid('calc-miles').innerHTML = rows;
+    }
+
+    function drawChart(sim, gm, p){
+      const svg = cid('calc-chart');
+      const W=720,H=300,pL=42,pR=18,pT=16,pB=30;
+      const reached = gm || sim.hist.length-1;
+      const maxM = Math.max(24, Math.min(MAXM, reached + 12));
+      const peakDoors = Math.max(2, sim.hist[Math.min(maxM, sim.hist.length-1)] || 1, ...sim.acq.length ? [sim.hist[Math.min(maxM, MAXM)]] : [1]);
+      const topDoors = Math.max(peakDoors, snap(sim, maxM).doors, 2);
+      const x = m => pL + (m/maxM)*(W-pL-pR);
+      const y = d => H-pB - (d/topDoors)*(H-pT-pB);
+      const hue = sim.p.s.hue;
+
+      let grid = '', steps = 4;
+      for (let i=0; i<=steps; i++){
+        const d = Math.round(topDoors * i/steps);
+        grid += `<line class="calc-grid-line" x1="${pL}" y1="${y(d)}" x2="${W-pR}" y2="${y(d)}"/>`;
+        grid += `<text class="calc-axis-txt" x="${pL-8}" y="${y(d)+4}" text-anchor="end">${d}</text>`;
+      }
+      let xt=''; const xstep = maxM > 240 ? 60 : maxM > 120 ? 24 : 12;
+      for (let m=0; m<=maxM; m+=xstep){
+        xt += `<text class="calc-axis-txt" x="${x(m)}" y="${H-9}" text-anchor="middle">yr ${Math.round(m/12)}</text>`;
+      }
+      let line = `M ${x(0)} ${y(0)}`;
+      for (let m=1; m<=maxM; m++){
+        const d = snap(sim, m).doors;
+        line += ` L ${x(m)} ${y(d)}`;
+      }
+      const area = `${line} L ${x(maxM)} ${y(0)} L ${x(0)} ${y(0)} Z`;
+      let marker = '';
+      if (gm && gm <= maxM){
+        const gd = snap(sim, gm).doors;
+        marker = `<line x1="${x(gm)}" y1="${pT}" x2="${x(gm)}" y2="${H-pB}" stroke="${hue}" stroke-dasharray="4 4" stroke-width="1.2"/><circle cx="${x(gm)}" cy="${y(gd)}" r="5.5" fill="${hue}"/>`;
+      }
+      svg.innerHTML = `<defs><linearGradient id="calcFill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${hue}" stop-opacity="0.34"/>
+        <stop offset="100%" stop-color="${hue}" stop-opacity="0"/></linearGradient></defs>
+        ${grid}${xt}<path d="${area}" fill="url(#calcFill)"/>
+        <path d="${line}" fill="none" stroke="${hue}" stroke-width="2.6" stroke-linejoin="round"/>${marker}`;
+    }
+
+    window.setGoal = function(type){
+      state.goalType = type;
+      ['income','doors','networth'].forEach(t => cid('goal-'+t).classList.toggle('active', t === type));
+      const g = GOAL_CFG[type], el = cid('goal');
+      el.min = g.min; el.max = g.max; el.step = g.step; el.value = g.def;
+      cid('goal-label').textContent = g.label;
+      cid('goal-hint').textContent = g.hint;
+      update();
+    };
+    window.setStrat = function(strat){
+      state.strat = strat;
+      ['turnkey','brrrr'].forEach(t => cid('strat-'+t).classList.toggle('active', t === strat));
+      update();
+    };
+    window.openCalc = function(){
+      cid('calc-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      update();
+    };
+    window.closeCalc = function(){
+      cid('calc-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    cid('calc-overlay').addEventListener('click', e => { if (e.target === cid('calc-overlay')) closeCalc(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCalc(); });
+    ['goal','start','monthly'].forEach(id => cid(id).addEventListener('input', update));
+    update();
+  })();
 </script>
 
 </body>
